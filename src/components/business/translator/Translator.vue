@@ -89,10 +89,10 @@ export default {
     ...mapMutations(['handleCurrentDropDown', 'reverseLanguages']),
     sendTextToServer() {
       if (this.connection && this.textInput) {
-        // Отправляем текст на сервер через SignalR
-        this.connection.invoke("SendTranslatedText", this.textInput).catch(err => {
-          console.error("Error sending text to server", err);
-        });
+        this.connection.invoke("ReceiveTextForTranslation", 1, this.textInput, 'en', 'fr') // Замените на реальные языки
+            .catch(err => {
+              console.error("Error sending text to server", err);
+            });
       }
     }
   },
@@ -100,9 +100,8 @@ export default {
     this.$store.dispatch('getAvailableLanguages');
 
     this.connection = new signalR.HubConnectionBuilder()
-        .withUrl("http://localhost:5268/translationHub") // Замените на URL вашего хаба
+        .withUrl("http://localhost:5268/translationHub") // URL хаба SignalR
         .build();
-
 
     this.connection.start()
         .then(() => {
@@ -112,6 +111,7 @@ export default {
           console.error("SignalR connection error", err);
         });
 
+    // Слушаем результат перевода
     this.connection.on("ReceiveTranslatedText", (translatedText) => {
       this.$store.commit('setTextResult', translatedText); // Обновляем textResult в Vuex
     });
