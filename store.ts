@@ -8,19 +8,19 @@ const store = createStore<State>({
         textResult: null,
         availableLanguages: null,
         filteredAvailableLanguages: [],
+        filteredAvailableLanguagesByEnabled: [],
         supportedLanguages: null,
         filteredSupportedLanguages: [],
         translateFromIdx: +(localStorage.getItem('translateFromIdx') || '0'),
         translateToIdx: +(localStorage.getItem('translateToIdx') || '1'),
         languageConfigIdx: +(localStorage.getItem('languageConfigIdx') || '0'),
         currentOpenDropDown: null,
-        searchSupportedLanguage: '',
+        searchEnabledLanguage: '',
         searchAvailableLanguage: ''
-
     },
     mutations: {
-        setSupportedLanguages(state, supportedLanguages) {
-            state.supportedLanguages = supportedLanguages;
+        updateLanguageConfiguration(state, updatedLanguages) {
+            state.availableLanguages = updatedLanguages;
         },
         setFilteredSupportedLanguages(state, searchLanguage: string) {
             const filtered = state.supportedLanguages.filter((language) => {
@@ -36,16 +36,16 @@ const store = createStore<State>({
         },
         closeDropDowns(state) {
             state.currentOpenDropDown = null;
-            state.searchSupportedLanguage = '';
+            state.searchEnabledLanguage = '';
             state.searchAvailableLanguage = '';
         },
-        setSearchSupportedLanguage(state, searchSupportedLanguage: string) {
-            state.searchSupportedLanguage = searchSupportedLanguage;
+        setSearchEnabledLanguage(state, searchEnabledLanguage: string) {
+            state.searchEnabledLanguage = searchEnabledLanguage;
         },
         setSearchAvailableLanguage(state, searchAvailableLanguage: string) {
             state.searchAvailableLanguage = searchAvailableLanguage;
         },
-        setAvailableLanguages(state, availableLanguages) {
+        setAvailableLanguages(state, availableLanguages: []) {
             state.availableLanguages = availableLanguages;
         },
         setFilteredAvailableLanguages(state, searchAvailableLanguage: string) {
@@ -53,6 +53,12 @@ const store = createStore<State>({
                 return language.languageName.toLowerCase().startsWith(searchAvailableLanguage.toLowerCase());
             });
             state.filteredAvailableLanguages = filtered.length > 0 ? filtered : state.availableLanguages;
+        },
+        setFilteredAvailableLanguagesByEnabled(state, searchAvailableLanguage: string) {
+            const filtered = state.availableLanguages.filter((language) => {
+                return language.enabled && language.languageName.toLowerCase().startsWith(searchAvailableLanguage.toLowerCase());
+            });
+            state.filteredAvailableLanguagesByEnabled = filtered.length > 0 ? filtered : state.availableLanguages;
         },
         setTranslateFromIdx(state, index) {
             if (index === state.translateToIdx) {
@@ -73,14 +79,6 @@ const store = createStore<State>({
         }
     },
     actions: {
-        async getSupportedLanguages({ commit }) {
-            try {
-                const response = await axios.get('http://localhost:5268/translator/supported-languages');
-                commit('setSupportedLanguages', response.data);
-            } catch (error) {
-                console.error('Error loading supported languages:', error);
-            }
-        },
         async getAvailableLanguages({ commit }) {
             try {
                 const response = await axios.get('http://localhost:5268/translator/all-app-languages');

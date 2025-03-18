@@ -7,13 +7,13 @@
     <div @click="closeDropDowns" class="mt-2 cursor-pointer xs:text-xs">
       < <span>Back</span>
     </div>
-    <input v-model="searchSupportedLanguage" class="w-full bg-gray-100 focus:outline-none rounded-lg hover:bg-gray-200
+    <input v-model="searchEnabledLanguage" class="w-full bg-gray-100 focus:outline-none rounded-lg hover:bg-gray-200
                   xs:mt-6 xs:h-15 xs:p-4" :placeholder="handleCurrentSupportedLanguageChange"/>
     <div class="border-t border-gray-200
                 xs:mt-4">
     </div>
     <div>
-      <div @click="handleCurrentSupportedLanguageIndex(index)" class="flex mt-4 rounded-lg hover:bg-gray-200 xs:h-15 xs:p-4 cursor-pointer" v-for="(language, index) in displayedSupportedLanguages" :key="index">
+      <div @click="handleCurrentSupportedLanguageIndex(index)" class="flex mt-4 rounded-lg hover:bg-gray-200 xs:h-15 xs:p-4 cursor-pointer" v-for="(language, index) in displayedEnabledLanguages" :key="index">
         <div class="place-content-center
                     xs:text-xs ">
           {{ language.languageName }}
@@ -33,7 +33,7 @@ import {mapMutations, mapState} from "vuex";
 export default {
   name: 'LanguageSelect',
   methods: {
-    ...mapMutations(['closeDropDowns', 'setTranslateFromIdx', 'setTranslateToIdx']),
+    ...mapMutations(['closeDropDowns', 'setTranslateFromIdx', 'setTranslateToIdx', 'setFilteredAvailableLanguagesByEnabled']),
     handleCurrentSupportedLanguageIndex(index) {
       if (this.currentOpenDropDown === 'translateFrom') {
         this.setTranslateFromIdx(index);
@@ -44,21 +44,22 @@ export default {
     }
   },
   computed: {
-    ...mapState(['currentOpenDropDown', 'supportedLanguages', 'filteredSupportedLanguages']),
+    ...mapState(['currentOpenDropDown', 'availableLanguages', 'filteredAvailableLanguagesByEnabled']),
     handleCurrentSupportedLanguageChange() {
       return this.currentOpenDropDown === 'translateFrom' ? 'Translate from' : 'Translate to';
     },
-    searchSupportedLanguage: {
+    searchEnabledLanguage: {
       get() {
-        return this.$store.state.searchSupportedLanguage;
+        return this.$store.state.searchEnabledLanguage;
       },
       set(value) {
-        this.$store.commit('setSearchSupportedLanguage', value);
-        this.$store.commit('setFilteredSupportedLanguages', value);
+        this.$store.commit('setSearchEnabledLanguage', value);
+        this.$store.commit('setFilteredAvailableLanguagesByEnabled', value);
       }
     },
-    displayedSupportedLanguages() {
-      return this.searchSupportedLanguage ? this.filteredSupportedLanguages : this.supportedLanguages;
+    displayedEnabledLanguages() {
+      const enabledLanguages = this.availableLanguages.filter(language => language.enabled);
+      return this.searchEnabledLanguage ? this.filteredAvailableLanguagesByEnabled : enabledLanguages;
     }
   }
 }

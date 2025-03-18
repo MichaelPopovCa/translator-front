@@ -4,7 +4,7 @@
   <div v-if="!currentOpenDropDown" class="flex justify-center items-center mt-32 space-x-6">
     <div class="w-full max-w-lg flex flex-col items-start">
       <button @click="handleCurrentDropDown('translateFrom')" class="w-full px-3 py-2 border border-gray-400 rounded-md focus:outline-none text-left flex justify-between items-center hover:bg-gray-200">
-        <span v-if="supportedLanguages">{{ supportedLanguages[translateFromIdx].languageName }}</span>
+        <span v-if="availableLanguages">{{ availableLanguages[translateFromIdx].languageName }}</span>
         <span v-else>Loading...</span>
         <font-awesome-icon :icon="['fas', 'caret-down']" />
       </button>
@@ -21,7 +21,7 @@
     </button>
     <div class="w-full max-w-lg flex flex-col items-end">
       <button @click="handleCurrentDropDown('translateTo')" class="w-full px-3 py-2 border border-gray-400 rounded-md focus:outline-none text-left flex justify-between items-center hover:bg-gray-200">
-        <span v-if="supportedLanguages">{{ supportedLanguages[translateToIdx].languageName }}</span>
+        <span v-if="availableLanguages">{{ availableLanguages[translateToIdx].languageName }}</span>
         <span v-else>Loading...</span>
         <font-awesome-icon :icon="['fas', 'caret-down']" />
       </button>
@@ -34,7 +34,7 @@
       />
     </div>
   </div>
-  <div v-else>
+  <div v-if="currentOpenDropDown === 'translateFrom' || currentOpenDropDown === 'translateTo'">
     <LanguageSelect/>
   </div>
 </template>
@@ -54,15 +54,14 @@ export default {
     LanguageSelect
   },
   computed: {
-    ...mapState(['textInput', 'supportedLanguages', 'translateFromIdx', 'translateToIdx', 'currentOpenDropDown']),
+    ...mapState(['textInput', 'availableLanguages', 'translateFromIdx', 'translateToIdx', 'currentOpenDropDown']),
     ...mapGetters(['textResult']),
   },
   methods: {
-    ...mapMutations(['handleCurrentDropDown', 'reverseLanguages']),
-    ...mapActions(['getSupportedLanguages'])
+    ...mapMutations(['handleCurrentDropDown', 'reverseLanguages'])
   },
   mounted() {
-    this.$store.dispatch('getSupportedLanguages');
+    this.$store.dispatch('getAvailableLanguages');
   }
 };
 </script>

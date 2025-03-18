@@ -13,13 +13,16 @@
                 xs:mt-4">
     </div>
     <div>
-      <div class="flex mt-4 rounded-lg hover:bg-gray-200 xs:h-15 xs:p-4 cursor-pointer" v-for="(language, index) in displayedAvailableLanguages" :key="index">
-        <div class="place-content-center
-                    xs:text-xs ">
+      <div @click="handleUpdateLanguageConfiguration(language.languageCode, !language.enabled)" class="flex mt-4 rounded-lg hover:bg-gray-200 xs:h-15 xs:p-4 cursor-pointer" v-for="(language, index) in displayedAvailableLanguages" :key="index">
+        <div class="place-content-center xs:text-xs">
           {{ language.languageName }}
         </div>
-        <div class="place-content-center
-                    xs:ml-6 xs:text-[14px] text-zinc-500">
+        <div class="ml-auto">
+          <div :class="language.enabled ? 'text-green-500' : 'text-red-500'">
+            {{ language.enabled ? 'Enabled' : 'Disabled' }}
+          </div>
+        </div>
+        <div class="place-content-center xs:ml-6 xs:text-[14px] text-zinc-500">
         </div>
       </div>
     </div>
@@ -34,6 +37,9 @@ export default {
   name: 'AvailableLanguage',
   methods: {
     ...mapMutations(['closeDropDowns']),
+    handleUpdateLanguageConfiguration(languageCode, enabled) {
+      this.$store.commit('updateLanguageConfiguration', {languageCode, enabled});
+    }
   },
   computed: {
     ...mapState(['currentOpenDropDown', 'availableLanguages', 'filteredAvailableLanguages']),
@@ -49,9 +55,6 @@ export default {
     displayedAvailableLanguages() {
       return this.searchAvailableLanguage ? this.filteredAvailableLanguages : this.availableLanguages;
     }
-  },
-  mounted() {
-    this.$store.dispatch('getAvailableLanguages');
   }
 }
 </script>
