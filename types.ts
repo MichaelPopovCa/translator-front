@@ -4,8 +4,6 @@ export interface State {
     availableLanguages: Language [];
     filteredAvailableLanguages: Language []
     filteredAvailableLanguagesByEnabled: Language [];
-    supportedLanguages: Language [];
-    filteredSupportedLanguages: Language [];
     translateFromIdx: number;
     translateToIdx: number;
     languageConfigIdx: number;

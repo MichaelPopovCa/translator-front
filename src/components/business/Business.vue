@@ -1,10 +1,9 @@
 <template>
-  <div><Translator/></div>
+  <div><Translator /></div>
 </template>
 
 <script>
 import {defineAsyncComponent} from "vue";
-import LanguageConfiguration from "@/components/business/languageconfiguration/LanguageConfiguration.vue";
 
 export default {
   name: 'Business',

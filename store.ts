@@ -9,8 +9,6 @@ const store = createStore<State>({
         availableLanguages: null,
         filteredAvailableLanguages: [],
         filteredAvailableLanguagesByEnabled: [],
-        supportedLanguages: null,
-        filteredSupportedLanguages: [],
         translateFromIdx: +(localStorage.getItem('translateFromIdx') || '0'),
         translateToIdx: +(localStorage.getItem('translateToIdx') || '1'),
         languageConfigIdx: +(localStorage.getItem('languageConfigIdx') || '0'),
@@ -19,14 +17,8 @@ const store = createStore<State>({
         searchAvailableLanguage: ''
     },
     mutations: {
-        updateLanguageConfiguration(state, updatedLanguages) {
+        setUpdatedAvailableLanguages(state, updatedLanguages) {
             state.availableLanguages = updatedLanguages;
-        },
-        setFilteredSupportedLanguages(state, searchLanguage: string) {
-            const filtered = state.supportedLanguages.filter((language) => {
-                return language.languageName.toLowerCase().startsWith(searchLanguage.toLowerCase());
-            });
-            state.filteredSupportedLanguages = filtered.length > 0 ? filtered : state.supportedLanguages;
         },
         setTextInput(state, textInput) {
             state.textInput = textInput;
@@ -83,6 +75,14 @@ const store = createStore<State>({
             try {
                 const response = await axios.get('http://localhost:5268/translator/all-app-languages');
                 commit('setAvailableLanguages', response.data);
+            } catch (error) {
+                console.error('Error loading available languages:', error);
+            }
+        },
+        async updateLanguageConfiguration({ commit }, { languageCode, enabled }) {
+            try {
+                const response = await axios.get(`http://localhost:5268/translator/update-language-config?languageCode=${languageCode}&enable=${enabled}`);
+                commit('setUpdatedAvailableLanguages', response.data);
             } catch (error) {
                 console.error('Error loading available languages:', error);
             }
