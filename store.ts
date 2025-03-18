@@ -5,8 +5,8 @@ import axios from "axios";
 const store = createStore<State>({
     state: {
         allLanguagesDisabled: false,
-        textInput: null,
-        textResult: null,
+        textInput: '',
+        textResult: '',
         availableLanguages: null,
         filteredAvailableLanguages: [],
         filteredAvailableLanguagesByEnabled: [],

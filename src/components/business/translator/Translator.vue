@@ -73,8 +73,16 @@ export default {
     LanguageSelect
   },
   computed: {
-    ...mapState(['textInput', 'availableLanguages', 'translateFromIdx', 'translateToIdx', 'currentOpenDropDown', 'allLanguagesDisabled']),
+    ...mapState(['availableLanguages', 'translateFromIdx', 'translateToIdx', 'currentOpenDropDown', 'allLanguagesDisabled']),
     ...mapGetters(['textResult']),
+    textInput: {
+      get() {
+        return this.$store.state.textInput;
+      },
+      set(value) {
+        this.$store.commit('setTextInput', value);
+      }
+    }
   },
   methods: {
     ...mapMutations(['handleCurrentDropDown', 'reverseLanguages'])
