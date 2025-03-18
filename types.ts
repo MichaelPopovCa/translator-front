@@ -1,4 +1,5 @@
 export interface State {
+    allLanguagesDisabled: boolean;
     textInput: string | null;
     textResult: string | null;
     availableLanguages: Language [];
@@ -6,7 +7,6 @@ export interface State {
     filteredAvailableLanguagesByEnabled: Language [];
     translateFromIdx: number;
     translateToIdx: number;
-    languageConfigIdx: number;
     currentOpenDropDown: string | null;
     searchEnabledLanguage: string;
     searchAvailableLanguage: string;

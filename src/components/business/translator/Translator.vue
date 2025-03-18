@@ -6,7 +6,7 @@
     <LanguageConfiguration />
   </div>
   <div
-    v-if="!currentOpenDropDown"
+    v-if="!currentOpenDropDown && !allLanguagesDisabled"
     class="flex justify-center items-center mt-32 space-x-6"
   >
     <div class="w-full max-w-lg flex flex-col items-start">
@@ -50,6 +50,9 @@
       />
     </div>
   </div>
+  <div v-else class="flex justify-center items-center mt-32 space-x-6 text-xl">
+    At least two languages need to be enabled
+  </div>
   <div v-if="currentOpenDropDown === 'translateFrom' || currentOpenDropDown === 'translateTo'">
     <LanguageSelect />
   </div>
@@ -70,7 +73,7 @@ export default {
     LanguageSelect
   },
   computed: {
-    ...mapState(['textInput', 'availableLanguages', 'translateFromIdx', 'translateToIdx', 'currentOpenDropDown']),
+    ...mapState(['textInput', 'availableLanguages', 'translateFromIdx', 'translateToIdx', 'currentOpenDropDown', 'allLanguagesDisabled']),
     ...mapGetters(['textResult']),
   },
   methods: {

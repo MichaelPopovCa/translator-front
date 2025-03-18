@@ -4,6 +4,7 @@ import axios from "axios";
 
 const store = createStore<State>({
     state: {
+        allLanguagesDisabled: false,
         textInput: null,
         textResult: null,
         availableLanguages: null,
@@ -11,13 +12,14 @@ const store = createStore<State>({
         filteredAvailableLanguagesByEnabled: [],
         translateFromIdx: +(localStorage.getItem('translateFromIdx') || '0'),
         translateToIdx: +(localStorage.getItem('translateToIdx') || '1'),
-        languageConfigIdx: +(localStorage.getItem('languageConfigIdx') || '0'),
         currentOpenDropDown: null,
         searchEnabledLanguage: '',
         searchAvailableLanguage: ''
     },
     mutations: {
         setUpdatedAvailableLanguages(state, updatedLanguages) {
+            const enabledLanguages = updatedLanguages.filter((language) => language.enabled);
+            state.allLanguagesDisabled = enabledLanguages.length < 2;
             state.availableLanguages = updatedLanguages;
         },
         setTextInput(state, textInput) {
