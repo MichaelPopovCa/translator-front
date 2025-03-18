@@ -25,6 +25,9 @@ const store = createStore<State>({
         setTextInput(state, textInput) {
             state.textInput = textInput;
         },
+        setTextResult(state, textResult) {
+            state.textResult = textResult;
+        },
         handleCurrentDropDown(state, currentOpenDropDown: string) {
             state.currentOpenDropDown = currentOpenDropDown;
         },

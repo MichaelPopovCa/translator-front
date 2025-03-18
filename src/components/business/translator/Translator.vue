@@ -23,6 +23,7 @@
         rows="10"
         class="w-full p-3 border-transparent rounded-md bg-white focus:outline-none resize-none"
         placeholder="Enter text to translate"
+        @input="sendTextToServer"
       />
     </div>
     <button
@@ -50,7 +51,7 @@
       />
     </div>
   </div>
-  <div v-else class="flex justify-center items-center mt-32 space-x-6 text-xl">
+  <div v-else-if="!currentOpenDropDown || (currentOpenDropDown !== 'translateFrom' && currentOpenDropDown !== 'translateTo')" class="flex justify-center items-center mt-32 space-x-6 text-xl">
     At least two languages need to be enabled
   </div>
   <div v-if="currentOpenDropDown === 'translateFrom' || currentOpenDropDown === 'translateTo'">
@@ -63,7 +64,7 @@ import { mapGetters, mapMutations, mapState} from "vuex";
 import LanguageSelect from '@/components/business/languageselect/LanguageSelect.vue';
 import LanguageConfiguration from "@/components/business/languageconfiguration/LanguageConfiguration.vue";
 import AvailableLanguage from "@/components/business/availablelanguages/AvailableLanguage.vue";
-
+import * as signalR from '@microsoft/signalr';
 
 export default {
   name: 'Translator',
@@ -85,10 +86,35 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['handleCurrentDropDown', 'reverseLanguages'])
+    ...mapMutations(['handleCurrentDropDown', 'reverseLanguages']),
+    sendTextToServer() {
+      if (this.connection && this.textInput) {
+        // Отправляем текст на сервер через SignalR
+        this.connection.invoke("SendTranslatedText", this.textInput).catch(err => {
+          console.error("Error sending text to server", err);
+        });
+      }
+    }
   },
   mounted() {
     this.$store.dispatch('getAvailableLanguages');
+
+    this.connection = new signalR.HubConnectionBuilder()
+        .withUrl("http://localhost:5268/translationHub") // Замените на URL вашего хаба
+        .build();
+
+
+    this.connection.start()
+        .then(() => {
+          console.log("SignalR connection established");
+        })
+        .catch(err => {
+          console.error("SignalR connection error", err);
+        });
+
+    this.connection.on("ReceiveTranslatedText", (translatedText) => {
+      this.$store.commit('setTextResult', translatedText); // Обновляем textResult в Vuex
+    });
   }
 };
 </script>
