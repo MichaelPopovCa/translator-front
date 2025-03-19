@@ -23,7 +23,7 @@
         rows="10"
         class="w-full p-3 border-transparent rounded-md bg-white focus:outline-none resize-none"
         placeholder="Enter text to translate"
-        @input="sendTextToServer"
+        @input="sendTextToServerDebounced"
       />
     </div>
     <button
@@ -87,7 +87,7 @@ export default {
   },
   methods: {
     ...mapMutations(['handleCurrentDropDown', 'reverseLanguages']),
-    sendTextToServer() {
+    sendTextToServerDebounced: debounce(function () {
       if (this.connection && this.textInput) {
         this.connection.invoke("ReceiveTextForTranslation", {
           TranslatorType: 1, // Замените на реальный тип переводчика
@@ -99,7 +99,7 @@ export default {
               console.error("Error sending text to server", err);
             });
       }
-    }
+    }, 1000),
   },
   mounted() {
     this.$store.dispatch('getAvailableLanguages');
@@ -121,4 +121,14 @@ export default {
     });
   }
 };
+
+function debounce(func, delay) {
+  let timer;
+  return function (...args) {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      func.apply(this, args);
+    }, delay);
+  };
+}
 </script>
