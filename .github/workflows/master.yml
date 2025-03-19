@@ -31,7 +31,8 @@ jobs:
              rm -rf ~/front/*
              echo "${{ secrets.SSH_VPS_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
              chmod 600 ~/.ssh/id_ed25519
-             mkdir ~/temp && chmod 700 ~/temp && cd ~/temp/    
+             mkdir ~/temp && chmod 700 ~/temp && cd ~/temp/
+             mkdir -p ~/front
              git clone git@github.com:MichaelPopovCa/translator-front.git
              cd translator-front/
              npm install
