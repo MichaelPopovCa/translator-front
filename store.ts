@@ -70,7 +70,7 @@ const store = createStore<State>({
     actions: {
         async getAvailableLanguages({ commit }) {
             try {
-                const response = await axios.get('http://localhost:5268/translator/all-app-languages');
+                const response = await axios.get('/translator/all-app-languages');
                 commit('setAvailableLanguages', response.data);
             } catch (error) {
                 console.error('Error loading available languages:', error);
@@ -78,7 +78,7 @@ const store = createStore<State>({
         },
         async updateLanguageConfiguration({ commit }, { languageCode, enabled }) {
             try {
-                const response = await axios.get(`http://localhost:5268/translator/update-language-config?languageCode=${languageCode}&enable=${enabled}`);
+                const response = await axios.get(`/translator/update-language-config?languageCode=${languageCode}&enable=${enabled}`);
                 commit('setUpdatedAvailableLanguages', response.data);
             } catch (error) {
                 console.error('Error loading available languages:', error);
