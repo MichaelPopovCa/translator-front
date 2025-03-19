@@ -90,7 +90,12 @@ export default {
     ...mapMutations(['handleCurrentDropDown', 'reverseLanguages']),
     sendTextToServer() {
       if (this.connection && this.textInput) {
-        this.connection.invoke("ReceiveTextForTranslation", 1, this.textInput, 'en', 'fr') // Замените на реальные языки
+        this.connection.invoke("ReceiveTextForTranslation", {
+          TranslatorType: 1, // Замените на реальный тип переводчика
+          SourceLanguage: this.availableLanguages[this.translateFromIdx].languageCode,
+          SourceText: this.textInput,
+          TargetLanguage: this.availableLanguages[this.translateToIdx].languageCode
+        })
             .catch(err => {
               console.error("Error sending text to server", err);
             });
