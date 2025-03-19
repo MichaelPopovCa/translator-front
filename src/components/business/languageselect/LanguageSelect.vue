@@ -19,7 +19,7 @@
     />
     <div>
       <div
-        v-for="(language, index) in availableLanguages"
+        v-for="(language, index) in filteredLanguages"
         :key="index"
         class="flex mt-4 rounded-lg hover:bg-gray-200 xs:h-15 xs:p-4 cursor-pointer"
         @click="handleCurrentSupportedLanguageIndex(language)"
@@ -60,6 +60,9 @@ export default {
     ...mapState(['enabledLanguages','currentOpenDropDown', 'availableLanguages']),
     handleCurrentSupportedLanguageChange() {
       return this.currentOpenDropDown === 'translateFrom' ? 'Translate from' : 'Translate to';
+    },
+    filteredLanguages() {
+      return this.availableLanguages.filter(language => language.enabled);
     }
   }
 }
