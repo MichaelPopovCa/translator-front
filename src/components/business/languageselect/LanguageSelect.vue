@@ -12,6 +12,7 @@
     >
       < <span>Back</span>
     </div>
+    <div class="mt-6 text-center text-lg">{{ handleCurrentSupportedLanguageChange }}</div>
     <div
       class="border-t border-gray-200
                 xs:mt-4"
