@@ -104,7 +104,7 @@ export default {
   mounted() {
     this.$store.dispatch('getAvailableLanguages');
     this.connection = new signalR.HubConnectionBuilder()
-        .withUrl("http://localhost:5268/translationHub") // URL хаба SignalR
+        .withUrl("/translationHub") // URL хаба SignalR
         .build();
 
     this.connection.start()
