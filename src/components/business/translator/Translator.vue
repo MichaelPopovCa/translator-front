@@ -51,7 +51,7 @@
       />
     </div>
   </div>
-  <div v-else-if="!currentOpenDropDown || (currentOpenDropDown !== 'translateFrom' && currentOpenDropDown !== 'translateTo')" class="flex justify-center items-center mt-32 space-x-6 text-xl">
+  <div v-else-if="!currentOpenDropDown || (currentOpenDropDown !== 'translateFrom' && currentOpenDropDown !== 'translateTo' && currentOpenDropDown !== 'languageConfig')" class="flex justify-center items-center mt-32 space-x-6 text-xl">
     At least two languages need to be enabled
   </div>
   <div v-if="currentOpenDropDown === 'translateFrom' || currentOpenDropDown === 'translateTo'">
