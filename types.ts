@@ -10,6 +10,7 @@ export interface State {
     currentOpenDropDown: string | null;
     searchEnabledLanguage: string;
     searchAvailableLanguage: string;
+    enabledLanguages: Language [];
 }
 export interface Language {
     languageCode: string;

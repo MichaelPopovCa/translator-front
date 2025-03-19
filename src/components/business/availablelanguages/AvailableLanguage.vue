@@ -52,8 +52,6 @@ export default {
   methods: {
     ...mapMutations(['closeDropDowns']),
     handleUpdateLanguageConfiguration(languageCode, enabled) {
-      console.log('languageCode', languageCode);
-      console.log('enabled', enabled);
       this.$store.dispatch('updateLanguageConfiguration', {languageCode, enabled});
     }
   },

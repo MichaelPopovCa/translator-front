@@ -14,13 +14,15 @@ const store = createStore<State>({
         translateToIdx: +(localStorage.getItem('translateToIdx') || '1'),
         currentOpenDropDown: null,
         searchEnabledLanguage: '',
-        searchAvailableLanguage: ''
+        searchAvailableLanguage: '',
+        enabledLanguages: []
     },
     mutations: {
         setUpdatedAvailableLanguages(state, updatedLanguages) {
             const enabledLanguages = updatedLanguages.filter((language) => language.enabled);
             state.allLanguagesDisabled = enabledLanguages.length < 2;
             state.availableLanguages = updatedLanguages;
+            state.enabledLanguages = updatedLanguages.filter((language) => language.enabled);
         },
         setTextInput(state, textInput) {
             state.textInput = textInput;
@@ -42,8 +44,9 @@ const store = createStore<State>({
         setSearchAvailableLanguage(state, searchAvailableLanguage: string) {
             state.searchAvailableLanguage = searchAvailableLanguage;
         },
-        setAvailableLanguages(state, availableLanguages: []) {
+        setAvailableLanguages(state, availableLanguages) {
             state.availableLanguages = availableLanguages;
+            state.enabledLanguages = availableLanguages.filter((language) => language.enabled);
         },
         setFilteredAvailableLanguages(state, searchAvailableLanguage: string) {
             const filtered = state.availableLanguages.filter((language) => {
