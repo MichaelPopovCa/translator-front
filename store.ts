@@ -22,6 +22,9 @@ const store = createStore<State>({
             const enabledLanguages = updatedLanguages.filter((language) => language.enabled);
             state.allLanguagesDisabled = enabledLanguages.length < 2;
             state.availableLanguages = updatedLanguages;
+            state.availableLanguages.forEach((language, idx) => {
+                language.idx = idx;
+            });
             state.enabledLanguages = updatedLanguages.filter((language) => language.enabled);
         },
         setTextInput(state, textInput) {

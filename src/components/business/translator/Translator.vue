@@ -14,7 +14,7 @@
         class="w-full px-3 py-2 border border-gray-400 rounded-md focus:outline-none text-left flex justify-between items-center hover:bg-gray-200"
         @click="handleCurrentDropDown('translateFrom')"
       >
-        <span v-if="availableLanguages">{{ enabledLanguages[translateFromIdx].languageName }}</span>
+        <span v-if="availableLanguages">{{ availableLanguages[translateFromIdx].languageName }}</span>
         <span v-else>Loading...</span>
         <font-awesome-icon :icon="['fas', 'caret-down']" />
       </button>
@@ -38,7 +38,7 @@
         class="w-full px-3 py-2 border border-gray-400 rounded-md focus:outline-none text-left flex justify-between items-center hover:bg-gray-200"
         @click="handleCurrentDropDown('translateTo')"
       >
-        <span v-if="availableLanguages">{{ enabledLanguages[translateToIdx].languageName }}</span>
+        <span v-if="availableLanguages">{{ availableLanguages[translateToIdx].languageName }}</span>
         <span v-else>Loading...</span>
         <font-awesome-icon :icon="['fas', 'caret-down']" />
       </button>

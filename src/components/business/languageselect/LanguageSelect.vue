@@ -12,19 +12,13 @@
     >
       < <span>Back</span>
     </div>
-    <input
-      v-model="searchEnabledLanguage"
-      class="w-full bg-gray-100 focus:outline-none rounded-lg hover:bg-gray-200
-                  xs:mt-6 xs:h-15 xs:p-4"
-      :placeholder="handleCurrentSupportedLanguageChange"
-    >
     <div
       class="border-t border-gray-200
                 xs:mt-4"
     />
     <div>
       <div
-        v-for="(language, index) in displayedEnabledLanguages"
+        v-for="(language, index) in availableLanguages"
         :key="index"
         class="flex mt-4 rounded-lg hover:bg-gray-200 xs:h-15 xs:p-4 cursor-pointer"
         @click="handleCurrentSupportedLanguageIndex(language)"
