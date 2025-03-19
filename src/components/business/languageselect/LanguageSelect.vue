@@ -45,7 +45,7 @@ import {mapMutations, mapState} from "vuex";
 export default {
   name: 'LanguageSelect',
   methods: {
-    ...mapMutations(['closeDropDowns', 'setTranslateFromIdx', 'setTranslateToIdx', 'setFilteredAvailableLanguagesByEnabled']),
+    ...mapMutations(['closeDropDowns', 'setTranslateFromIdx', 'setTranslateToIdx']),
     handleCurrentSupportedLanguageIndex(language) {
       if (this.currentOpenDropDown === 'translateFrom') {
         this.setTranslateFromIdx(language.idx);
@@ -56,21 +56,9 @@ export default {
     }
   },
   computed: {
-    ...mapState(['enabledLanguages','currentOpenDropDown', 'availableLanguages', 'filteredAvailableLanguagesByEnabled']),
+    ...mapState(['enabledLanguages','currentOpenDropDown', 'availableLanguages']),
     handleCurrentSupportedLanguageChange() {
       return this.currentOpenDropDown === 'translateFrom' ? 'Translate from' : 'Translate to';
-    },
-    searchEnabledLanguage: {
-      get() {
-        return this.$store.state.searchEnabledLanguage;
-      },
-      set(value) {
-        this.$store.commit('setSearchEnabledLanguage', value);
-        this.$store.commit('setFilteredAvailableLanguagesByEnabled', value);
-      }
-    },
-    displayedEnabledLanguages() {
-      return this.searchEnabledLanguage ? this.filteredAvailableLanguagesByEnabled : this.enabledLanguages;
     }
   }
 }

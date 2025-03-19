@@ -50,19 +50,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['currentOpenDropDown', 'availableLanguages', 'filteredAvailableLanguages']),
-    searchAvailableLanguage: {
-      get() {
-        return this.$store.state.searchAvailableLanguage;
-      },
-      set(value) {
-        this.$store.commit('setSearchAvailableLanguage', value);
-        this.$store.commit('setFilteredAvailableLanguages', value);
-      }
-    },
-    displayedAvailableLanguages() {
-      return this.searchAvailableLanguage ? this.filteredAvailableLanguages : this.availableLanguages;
-    }
+    ...mapState(['currentOpenDropDown', 'availableLanguages'])
   }
 }
 </script>

@@ -3,8 +3,6 @@ export interface State {
     textInput: string | null;
     textResult: string | null;
     availableLanguages: Language [];
-    filteredAvailableLanguages: Language []
-    filteredAvailableLanguagesByEnabled: Language [];
     translateFromIdx: number;
     translateToIdx: number;
     currentOpenDropDown: string | null;

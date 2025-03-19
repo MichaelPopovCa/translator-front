@@ -8,8 +8,6 @@ const store = createStore<State>({
         textInput: '',
         textResult: '',
         availableLanguages: null,
-        filteredAvailableLanguages: [],
-        filteredAvailableLanguagesByEnabled: [],
         translateFromIdx: +(localStorage.getItem('translateFromIdx') || '0'),
         translateToIdx: +(localStorage.getItem('translateToIdx') || '1'),
         currentOpenDropDown: null,
@@ -25,7 +23,6 @@ const store = createStore<State>({
             state.availableLanguages.forEach((language, idx) => {
                 language.idx = idx;
             });
-            state.enabledLanguages = updatedLanguages.filter((language) => language.enabled);
         },
         setTextInput(state, textInput) {
             state.textInput = textInput;
@@ -41,9 +38,6 @@ const store = createStore<State>({
             state.searchEnabledLanguage = '';
             state.searchAvailableLanguage = '';
         },
-        setSearchEnabledLanguage(state, searchEnabledLanguage: string) {
-            state.searchEnabledLanguage = searchEnabledLanguage;
-        },
         setSearchAvailableLanguage(state, searchAvailableLanguage: string) {
             state.searchAvailableLanguage = searchAvailableLanguage;
         },
@@ -52,19 +46,6 @@ const store = createStore<State>({
             state.availableLanguages.forEach((language, idx) => {
                 language.idx = idx;
             });
-            state.enabledLanguages = availableLanguages.filter((language) => language.enabled);
-        },
-        setFilteredAvailableLanguages(state, searchAvailableLanguage: string) {
-            const filtered = state.availableLanguages.filter((language) => {
-                return language.languageName.toLowerCase().startsWith(searchAvailableLanguage.toLowerCase());
-            });
-            state.filteredAvailableLanguages = filtered.length > 0 ? filtered : state.availableLanguages;
-        },
-        setFilteredAvailableLanguagesByEnabled(state, searchAvailableLanguage: string) {
-            const filtered = state.enabledLanguages.filter((language) => {
-                return language.enabled && language.languageName.toLowerCase().startsWith(searchAvailableLanguage.toLowerCase());
-            });
-            state.filteredAvailableLanguagesByEnabled = filtered.length > 0 ? filtered : state.enabledLanguages;
         },
         setTranslateFromIdx(state, index) {
             if (index === state.translateToIdx) {
