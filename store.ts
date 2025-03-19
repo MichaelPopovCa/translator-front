@@ -53,6 +53,7 @@ const store = createStore<State>({
             } else {
                 state.translateFromIdx = index;
             }
+            localStorage.setItem('translateFromIdx', state.translateFromIdx.toString());
         },
         setTranslateToIdx(state, index) {
             if (index === state.translateFromIdx) {
@@ -60,6 +61,7 @@ const store = createStore<State>({
             } else {
                 state.translateToIdx = index;
             }
+            localStorage.setItem('translateToIdx', state.translateToIdx.toString());
         },
         reverseLanguages(state) {
             [state.translateFromIdx, state.translateToIdx] = [state.translateToIdx, state.translateFromIdx];
