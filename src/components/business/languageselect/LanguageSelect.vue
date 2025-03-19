@@ -62,7 +62,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['currentOpenDropDown', 'availableLanguages', 'filteredAvailableLanguagesByEnabled']),
+    ...mapState(['enabledLanguages','currentOpenDropDown', 'availableLanguages', 'filteredAvailableLanguagesByEnabled']),
     handleCurrentSupportedLanguageChange() {
       return this.currentOpenDropDown === 'translateFrom' ? 'Translate from' : 'Translate to';
     },
@@ -76,8 +76,7 @@ export default {
       }
     },
     displayedEnabledLanguages() {
-      const enabledLanguages = this.availableLanguages.filter(language => language.enabled);
-      return this.searchEnabledLanguage ? this.filteredAvailableLanguagesByEnabled : enabledLanguages;
+      return this.searchEnabledLanguage ? this.filteredAvailableLanguagesByEnabled : this.enabledLanguages;
     }
   }
 }

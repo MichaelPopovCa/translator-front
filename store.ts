@@ -55,10 +55,10 @@ const store = createStore<State>({
             state.filteredAvailableLanguages = filtered.length > 0 ? filtered : state.availableLanguages;
         },
         setFilteredAvailableLanguagesByEnabled(state, searchAvailableLanguage: string) {
-            const filtered = state.availableLanguages.filter((language) => {
+            const filtered = state.enabledLanguages.filter((language) => {
                 return language.enabled && language.languageName.toLowerCase().startsWith(searchAvailableLanguage.toLowerCase());
             });
-            state.filteredAvailableLanguagesByEnabled = filtered.length > 0 ? filtered : state.availableLanguages;
+            state.filteredAvailableLanguagesByEnabled = filtered.length > 0 ? filtered : state.enabledLanguages;
         },
         setTranslateFromIdx(state, index) {
             if (index === state.translateToIdx) {
