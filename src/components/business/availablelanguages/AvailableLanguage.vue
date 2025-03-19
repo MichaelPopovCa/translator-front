@@ -12,6 +12,7 @@
     >
       < <span>Back</span>
     </div>
+    <div class="mt-6 text-center text-lg">Add or remove language</div>
     <div
       class="border-t border-gray-200
                 xs:mt-4"
