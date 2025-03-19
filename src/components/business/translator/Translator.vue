@@ -65,7 +65,6 @@ import LanguageSelect from '@/components/business/languageselect/LanguageSelect.
 import LanguageConfiguration from "@/components/business/languageconfiguration/LanguageConfiguration.vue";
 import AvailableLanguage from "@/components/business/availablelanguages/AvailableLanguage.vue";
 import * as signalR from '@microsoft/signalr';
-import availableLanguage from "@/components/business/availablelanguages/AvailableLanguage.vue";
 
 export default {
   name: 'Translator',
