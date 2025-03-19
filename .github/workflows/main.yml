@@ -1,0 +1,41 @@
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  run_pull:
+    name: run pull
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: install ssh keys
+        run: |
+          mkdir -p ~/.ssh
+          ls -ld ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+
+      - name: set permissions for ssh key
+        run: |
+          chmod 600 ~/.ssh/id_ed25519
+
+      - name: add ssh host to known_hosts
+        run: |
+          ssh-keyscan -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - name: connect and output message
+        run: |
+          ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+             rm -rf ~/temp/
+             rm -rf ~/.ssh/id_ed25519
+             rm -rf ~/front/*
+             echo "${{ secrets.SSH_VPS_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+             chmod 600 ~/.ssh/id_ed25519
+             mkdir ~/temp && chmod 700 ~/temp && cd ~/temp/    
+             git clone git@github.com:MichaelPopovCa/translator-front.git
+             cd translator-front/
+             npm install
+             npm run build
+             cp -r ~/temp/translator-front/dist/* ~/front
+             sudo systemctl restart nginx
+          EOF
