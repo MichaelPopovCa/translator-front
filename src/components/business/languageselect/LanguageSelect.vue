@@ -27,7 +27,7 @@
         v-for="(language, index) in displayedEnabledLanguages"
         :key="index"
         class="flex mt-4 rounded-lg hover:bg-gray-200 xs:h-15 xs:p-4 cursor-pointer"
-        @click="handleCurrentSupportedLanguageIndex(index)"
+        @click="handleCurrentSupportedLanguageIndex(language)"
       >
         <div
           class="place-content-center
@@ -52,11 +52,11 @@ export default {
   name: 'LanguageSelect',
   methods: {
     ...mapMutations(['closeDropDowns', 'setTranslateFromIdx', 'setTranslateToIdx', 'setFilteredAvailableLanguagesByEnabled']),
-    handleCurrentSupportedLanguageIndex(index) {
+    handleCurrentSupportedLanguageIndex(language) {
       if (this.currentOpenDropDown === 'translateFrom') {
-        this.setTranslateFromIdx(index);
+        this.setTranslateFromIdx(language.idx);
       } else {
-        this.setTranslateToIdx(index);
+        this.setTranslateToIdx(language.idx);
       }
       this.closeDropDowns()
     }

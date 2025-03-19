@@ -46,6 +46,9 @@ const store = createStore<State>({
         },
         setAvailableLanguages(state, availableLanguages) {
             state.availableLanguages = availableLanguages;
+            state.availableLanguages.forEach((language, idx) => {
+                language.idx = idx;
+            });
             state.enabledLanguages = availableLanguages.filter((language) => language.enabled);
         },
         setFilteredAvailableLanguages(state, searchAvailableLanguage: string) {

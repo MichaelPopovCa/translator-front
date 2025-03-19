@@ -16,4 +16,5 @@ export interface Language {
     languageCode: string;
     languageName: string;
     enabled: boolean;
+    idx: number;
 }
