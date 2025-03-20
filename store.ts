@@ -23,6 +23,16 @@ const store = createStore<State>({
             state.availableLanguages.forEach((language, idx) => {
                 language.idx = idx;
             });
+
+            if (state.translateFromIdx >= state.availableLanguages.length || !state.availableLanguages[state.translateFromIdx].enabled) {
+                const validFromIdx = state.availableLanguages.findIndex(lang => lang.enabled);
+                state.translateFromIdx = validFromIdx !== -1 ? validFromIdx : 0;
+            }
+
+            if (state.translateToIdx >= state.availableLanguages.length || !state.availableLanguages[state.translateToIdx].enabled) {
+                const validToIdx = state.availableLanguages.findIndex(lang => lang.enabled && lang.idx !== state.translateFromIdx);
+                state.translateToIdx = validToIdx !== -1 ? validToIdx : 1;
+            }
         },
         setTextInput(state, textInput) {
             state.textInput = textInput;
