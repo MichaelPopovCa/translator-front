@@ -86,6 +86,10 @@
       <div>Backend:</div>
       <div class="mt-2">.NET 9</div>
     </div>
+    <div class="mt-5 gap-x-2">
+      <div>Database:</div>
+      <div class="mt-2">In memory database</div>
+    </div>
     <div class="mt-5 mb-5 gap-x-2">
       <div class="flex-grow border-t border-gray-200 xs:mt-6"></div>
     </div>
