@@ -25,6 +25,22 @@
         </a>
       </div>
     </div>
+    <div class="mt-5 flex justify-self-start gap-x-2">
+      <div>GitHub Backend:</div>
+      <div class="cursor-pointer">
+        <a href="https://github.com/MichaelPopovCa/translator-ba" target="_blank" rel="noopener noreferrer">
+          <img src="@/images/github-mark.png" alt="LinkedIn" class="w-6 h-6" /> <!-- Укажите путь к вашему PNG -->
+        </a>
+      </div>
+    </div>
+    <div class="mt-5 flex justify-self-start gap-x-2">
+      <div>GitHub Frontend:</div>
+      <div class="cursor-pointer">
+        <a href="https://github.com/MichaelPopovCa/translator-front" target="_blank" rel="noopener noreferrer">
+          <img src="@/images/github-mark.png" alt="LinkedIn" class="w-6 h-6" /> <!-- Укажите путь к вашему PNG -->
+        </a>
+      </div>
+    </div>
     <div class="mt-5 gap-x-2">
       <div class="flex-grow border-t border-gray-200 xs:mt-6"></div>
     </div>
@@ -69,22 +85,6 @@
     <div class="mt-5 gap-x-2">
       <div>Backend:</div>
       <div class="mt-2">.NET 9</div>
-    </div>
-    <div class="mt-5 flex justify-self-start gap-x-2">
-      <div>GitHub BackEnd:</div>
-      <div class="cursor-pointer">
-        <a href="https://github.com/MichaelPopovCa/translator-ba" target="_blank" rel="noopener noreferrer">
-          <img src="@/images/github-mark.png" alt="LinkedIn" class="w-6 h-6" /> <!-- Укажите путь к вашему PNG -->
-        </a>
-      </div>
-    </div>
-    <div class="mt-5 flex justify-self-start gap-x-2">
-      <div>GitHub FrontEnd:</div>
-      <div class="cursor-pointer">
-        <a href="https://github.com/MichaelPopovCa/translator-front" target="_blank" rel="noopener noreferrer">
-          <img src="@/images/github-mark.png" alt="LinkedIn" class="w-6 h-6" /> <!-- Укажите путь к вашему PNG -->
-        </a>
-      </div>
     </div>
     <div class="mt-5 mb-5 gap-x-2">
       <div class="flex-grow border-t border-gray-200 xs:mt-6"></div>
