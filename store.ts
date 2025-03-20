@@ -29,9 +29,9 @@ const store = createStore<State>({
                 state.translateFromIdx = validFromIdx !== -1 ? validFromIdx : 0;
             }
 
-            if (state.translateToIdx >= state.availableLanguages.length || !state.availableLanguages[state.translateToIdx].enabled) {
+            if (state.translateToIdx >= state.availableLanguages.length || !state.availableLanguages[state.translateToIdx].enabled || state.translateToIdx === state.translateFromIdx) {
                 const validToIdx = state.availableLanguages.findIndex(lang => lang.enabled && lang.idx !== state.translateFromIdx);
-                state.translateToIdx = validToIdx !== -1 ? validToIdx : 1;
+                state.translateToIdx = validToIdx !== -1 ? validToIdx : (state.translateFromIdx + 1) % state.availableLanguages.length;
             }
         },
         setTextInput(state, textInput) {
