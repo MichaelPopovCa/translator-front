@@ -68,7 +68,7 @@
     </div>
     <div class="mt-5 gap-x-2">
       <div>Backend:</div>
-      <div class="mt-2">.NET9</div>
+      <div class="mt-2">.NET 9</div>
     </div>
     <div class="mt-5 flex justify-self-start gap-x-2">
       <div>GitHub BackEnd:</div>
