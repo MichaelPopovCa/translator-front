@@ -59,7 +59,7 @@
   <div v-if="currentOpenDropDown === 'translateFrom' || currentOpenDropDown === 'translateTo'">
     <LanguageSelect />
   </div>
-  <div v-if="currentOpenDropDown !== 'aboutProject'"
+  <div v-if="currentOpenDropDown === 'translator'"
       @click="handleCurrentDropDown('aboutProject')" class="mt-20 xs:w-screen xs:h-auto xs:p-6 xs:rounded-tl-lg rounded-tr-lg
           sm:w-screen sm:h-auto sm:p-6 sm:rounded-tl-lg
           md:w-screen md:h-auto md:p-6 md:rounded-tl-lg
@@ -107,7 +107,7 @@ export default {
     sendTextToServerDebounced: debounce(function () {
       if (this.connection && this.textInput) {
         this.connection.invoke("ReceiveTextForTranslation", {
-          TranslatorType: 1, // Замените на реальный тип переводчика
+          TranslatorType: 1,
           SourceLanguage: this.availableLanguages[this.translateFromIdx].languageCode,
           SourceText: this.textInput,
           TargetLanguage: this.availableLanguages[this.translateToIdx].languageCode
