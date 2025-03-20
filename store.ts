@@ -27,6 +27,8 @@ const store = createStore<State>({
             if (state.translateFromIdx >= state.availableLanguages.length || !state.availableLanguages[state.translateFromIdx].enabled) {
                 const validFromIdx = state.availableLanguages.findIndex(lang => lang.enabled);
                 state.translateFromIdx = validFromIdx !== -1 ? validFromIdx : 0;
+                localStorage.setItem('translateFromIdx', state.translateFromIdx.toString());
+                localStorage.setItem('translateToIdx', state.translateToIdx.toString());
             }
 
             if (state.translateToIdx >= state.availableLanguages.length || !state.availableLanguages[state.translateToIdx].enabled || state.translateToIdx === state.translateFromIdx) {
