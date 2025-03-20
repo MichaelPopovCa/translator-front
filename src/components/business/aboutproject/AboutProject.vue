@@ -76,7 +76,7 @@
     </div>
     <div class="mt-5 gap-x-2">
       <div>Design:</div>
-      <div class="mt-2">CSS media queries to achieve a responsive design on any device, including mobile phones.</div>
+      <div class="mt-2">CSS media queries to achieve a responsive design on any device, including mobile phones</div>
     </div>
     <div class="mt-5 gap-x-2">
       <div>Web server:</div>
@@ -89,6 +89,10 @@
     <div class="mt-5 gap-x-2">
       <div>Database:</div>
       <div class="mt-2">In memory database</div>
+    </div>
+    <div class="mt-5 gap-x-2">
+      <div>Techniques:</div>
+      <div class="mt-2">Socket, debouncing, XSS protection</div>
     </div>
     <div class="mt-5 mb-5 gap-x-2">
       <div class="flex-grow border-t border-gray-200 xs:mt-6"></div>
