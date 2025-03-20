@@ -42,10 +42,12 @@ const store = createStore<State>({
             state.searchAvailableLanguage = searchAvailableLanguage;
         },
         setAvailableLanguages(state, availableLanguages) {
-            state.availableLanguages = availableLanguages;
-            state.availableLanguages.forEach((language, idx) => {
-                language.idx = idx;
-            });
+            state.availableLanguages = availableLanguages.map((language, idx) => ({
+                ...language,
+                idx: idx
+            }));
+            const enabledLanguages = availableLanguages.filter((language) => language.enabled);
+            state.allLanguagesDisabled = enabledLanguages.length < 2;
         },
         setTranslateFromIdx(state, index) {
             if (index === state.translateToIdx) {
@@ -70,7 +72,7 @@ const store = createStore<State>({
     actions: {
         async getAvailableLanguages({ commit }) {
             try {
-                const response = await axios.get('/translator/all-app-languages');
+                const response = await axios.get('http://localhost:8080/translator/all-app-languages');
                 commit('setAvailableLanguages', response.data);
             } catch (error) {
                 console.error('Error loading available languages:', error);
@@ -78,7 +80,7 @@ const store = createStore<State>({
         },
         async updateLanguageConfiguration({ commit }, { languageCode, enabled }) {
             try {
-                const response = await axios.get(`/translator/update-language-config?languageCode=${languageCode}&enable=${enabled}`);
+                const response = await axios.get(`http://localhost:8080/translator/update-language-config?languageCode=${languageCode}&enable=${enabled}`);
                 commit('setUpdatedAvailableLanguages', response.data);
             } catch (error) {
                 console.error('Error loading available languages:', error);
