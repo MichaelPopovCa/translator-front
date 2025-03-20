@@ -11,6 +11,9 @@ export default {
   name: 'App',
   components: {
     Business: defineAsyncComponent (() => import("@/components/business/Business.vue")),
+  },
+  mounted() {
+    this.$store.dispatch('getAvailableLanguages');
   }
 }
 </script>

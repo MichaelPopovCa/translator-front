@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fortawesome/free-brands-svg-icons": "^6.7.2",
     "@microsoft/signalr": "^8.0.7",
     "axios": "1.8.3",
     "vue": "^3.4.21",

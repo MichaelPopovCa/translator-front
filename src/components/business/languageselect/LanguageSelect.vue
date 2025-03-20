@@ -21,7 +21,7 @@
       <div
         v-for="(language, index) in filteredLanguages"
         :key="index"
-        class="flex mt-4 rounded-lg hover:bg-gray-200 xs:h-15 xs:p-4 cursor-pointer"
+        class="flex mt-4 rounded-lg hover:bg-gray-200 xs:h-15 xs:p-4 cursor-pointer justify-center items-center"
         @click="handleCurrentSupportedLanguageIndex(language)"
       >
         <div

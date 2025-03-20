@@ -10,7 +10,7 @@ const store = createStore<State>({
         availableLanguages: null,
         translateFromIdx: +(localStorage.getItem('translateFromIdx') || '0'),
         translateToIdx: +(localStorage.getItem('translateToIdx') || '1'),
-        currentOpenDropDown: null,
+        currentOpenDropDown: 'aboutProject',
         searchEnabledLanguage: '',
         searchAvailableLanguage: '',
         enabledLanguages: []
@@ -26,6 +26,9 @@ const store = createStore<State>({
         },
         setTextInput(state, textInput) {
             state.textInput = textInput;
+            if(textInput === '') {
+                state.textResult = '';
+            }
         },
         setTextResult(state, textResult) {
             state.textResult = textResult;

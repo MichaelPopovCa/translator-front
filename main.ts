@@ -2,8 +2,9 @@ import {App, createApp} from 'vue'
 import Root from './App.vue'
 import store from "./store";
 import { library, IconPack } from '@fortawesome/fontawesome-svg-core';
-import { fas } from '@fortawesome/free-solid-svg-icons';
+import {fas} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+
 
 const app: App<Element> = createApp(Root)
 

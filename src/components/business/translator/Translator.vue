@@ -1,12 +1,13 @@
 <template>
+  <div v-if="currentOpenDropDown === 'aboutProject'"><AboutProject/></div>
   <div v-if="currentOpenDropDown === 'languageConfig'">
     <AvailableLanguage />
   </div>
-  <div v-if="!currentOpenDropDown">
+  <div v-if="!currentOpenDropDown || currentOpenDropDown === 'translator'">
     <LanguageConfiguration />
   </div>
   <div
-    v-if="!currentOpenDropDown && !allLanguagesDisabled"
+    v-if="!currentOpenDropDown && !allLanguagesDisabled || currentOpenDropDown === 'translator' && !allLanguagesDisabled"
     class="flex justify-center items-center mt-32 space-x-6"
   >
     <div class="w-full max-w-lg flex flex-col items-start">
@@ -48,14 +49,28 @@
         class="w-full p-3 border-transparent rounded-md bg-gray-100 focus:outline-none resize-none"
         readonly
         placeholder="Translated text"
+        :maxlength="50"
       />
     </div>
   </div>
-  <div v-else-if="!currentOpenDropDown || (currentOpenDropDown !== 'translateFrom' && currentOpenDropDown !== 'translateTo' && currentOpenDropDown !== 'languageConfig')" class="flex justify-center items-center mt-32 space-x-6 text-xl">
+  <div v-else-if="!currentOpenDropDown || (currentOpenDropDown !== 'translateFrom' && currentOpenDropDown !== 'translateTo' && currentOpenDropDown !== 'languageConfig' && currentOpenDropDown !== 'aboutProject')" class="flex justify-center items-center mt-32 space-x-6 text-xl">
     At least two languages need to be enabled
   </div>
   <div v-if="currentOpenDropDown === 'translateFrom' || currentOpenDropDown === 'translateTo'">
     <LanguageSelect />
+  </div>
+  <div v-if="currentOpenDropDown !== 'aboutProject'"
+      @click="handleCurrentDropDown('aboutProject')" class="mt-20 xs:w-screen xs:h-auto xs:p-6 xs:rounded-tl-lg rounded-tr-lg
+          sm:w-screen sm:h-auto sm:p-6 sm:rounded-tl-lg
+          md:w-screen md:h-auto md:p-6 md:rounded-tl-lg
+          lg:w-full lg:px-10 lg:rounded-none
+          xl:w-2/3 xl:mx-auto xl:px-72 xl:rounded-none"
+  >
+    <button
+        class="w-1/2 mx-auto bg-gray-200 px-3 py-2 rounded-md focus:outline-none text-center flex justify-center items-center hover:bg-gray-300"
+    >
+      <span>About project</span>
+    </button>
   </div>
 </template>
 
@@ -65,10 +80,12 @@ import LanguageSelect from '@/components/business/languageselect/LanguageSelect.
 import LanguageConfiguration from "@/components/business/languageconfiguration/LanguageConfiguration.vue";
 import AvailableLanguage from "@/components/business/availablelanguages/AvailableLanguage.vue";
 import * as signalR from '@microsoft/signalr';
+import AboutProject from "@/components/business/aboutproject/AboutProject.vue";
 
 export default {
   name: 'Translator',
   components: {
+    AboutProject,
     AvailableLanguage,
     LanguageConfiguration,
     LanguageSelect
@@ -81,7 +98,7 @@ export default {
         return this.$store.state.textInput;
       },
       set(value) {
-        this.$store.commit('setTextInput', value);
+        this.$store.commit('setTextInput', sanitizeInput(value));
       }
     }
   },
@@ -102,9 +119,8 @@ export default {
     }, 1000),
   },
   mounted() {
-    this.$store.dispatch('getAvailableLanguages');
     this.connection = new signalR.HubConnectionBuilder()
-        .withUrl("/translationHub") // URL хаба SignalR
+        .withUrl("/translationHub")
         .build();
 
     this.connection.start()
@@ -115,13 +131,16 @@ export default {
           console.error("SignalR connection error", err);
         });
 
-    // Слушаем результат перевода
     this.connection.on("ReceiveTranslatedText", (translatedText) => {
-      this.$store.commit('setTextResult', translatedText); // Обновляем textResult в Vuex
+      this.$store.commit('setTextResult', translatedText);
     });
   }
 };
-
+function sanitizeInput(input) {
+  return input.replace(/<script.*?>.*?<\/script>/gi, '')
+      .replace(/<.*?javascript:.*?>/gi, '')
+      .replace(/on\w+=".*?"/gi, '');
+}
 function debounce(func, delay) {
   let timer;
   return function (...args) {
