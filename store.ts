@@ -28,12 +28,12 @@ const store = createStore<State>({
                 const validFromIdx = state.availableLanguages.findIndex(lang => lang.enabled);
                 state.translateFromIdx = validFromIdx !== -1 ? validFromIdx : 0;
                 localStorage.setItem('translateFromIdx', state.translateFromIdx.toString());
-                localStorage.setItem('translateToIdx', state.translateToIdx.toString());
             }
 
             if (state.translateToIdx >= state.availableLanguages.length || !state.availableLanguages[state.translateToIdx].enabled || state.translateToIdx === state.translateFromIdx) {
                 const validToIdx = state.availableLanguages.findIndex(lang => lang.enabled && lang.idx !== state.translateFromIdx);
                 state.translateToIdx = validToIdx !== -1 ? validToIdx : (state.translateFromIdx + 1) % state.availableLanguages.length;
+                localStorage.setItem('translateToIdx', state.translateToIdx.toString());
             }
         },
         setTextInput(state, textInput) {
