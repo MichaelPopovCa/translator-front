@@ -49,9 +49,13 @@ const store = createStore<State>({
             state.currentOpenDropDown = currentOpenDropDown;
         },
         closeDropDowns(state) {
-            state.currentOpenDropDown = null;
-            state.searchEnabledLanguage = '';
-            state.searchAvailableLanguage = '';
+            if(state.currentOpenDropDown !== 'aboutProject') {
+                state.currentOpenDropDown = 'translator';
+            }else {
+                state.currentOpenDropDown = null;
+                state.searchEnabledLanguage = '';
+                state.searchAvailableLanguage = '';
+            }
         },
         setSearchAvailableLanguage(state, searchAvailableLanguage: string) {
             state.searchAvailableLanguage = searchAvailableLanguage;
